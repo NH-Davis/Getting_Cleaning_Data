@@ -1,0 +1,122 @@
+# STEP 1 #
+# Read the subject file
+subject_test_data <- read.table("C:\\Users\\nhart\\OneDrive\\Desktop\\Johns Hopkins\\Getting_Cleaning_Data\\End of course project\\subject_test.txt", header = FALSE, col.names = c("subject"))
+# Read the activity code file
+y_test_data <- read.table("C:\\Users\\nhart\\OneDrive\\Desktop\\Johns Hopkins\\Getting_Cleaning_Data\\End of course project\\y_test.txt", header = FALSE, col.names = c("activity.code"))
+# Check that the number of rows in both data frames is the same
+if (nrow(subject_data) != nrow(activity_data)) {
+  stop("The files have different numbers of rows")
+}
+# Merge the subject and activity data frames by columns
+subact_test_data <- cbind(subject_test_data, y_test_data)
+# Read the activity label file
+activity_labels <- read.table("C:\\Users\\nhart\\OneDrive\\Desktop\\Johns Hopkins\\Getting_Cleaning_Data\\End of course project\\activity_labels.txt", header = FALSE, col.names = c("activity.code", "activity.label"))
+# Merge subact_test data frame with activity label data frame
+subact_test_merged_data <- merge(subact_test_data, activity_labels, by = "activity.code", all.x = TRUE)
+# Reorder columns
+subact_test_merged_data <- subact_test_merged_data[c("subject", "activity.code", "activity.label")]
+# Display the first few rows of the merged data
+head(subact_test_merged_data)
+# Write the subact_test_merged_data dataframe to a CSV file
+write.csv(subact_test_merged_data, file = "C:\\Users\\nhart\\OneDrive\\Desktop\\Johns Hopkins\\Getting_Cleaning_Data\\End of course project\\ subact_test_merged_data.csv", row.names = FALSE)
+
+# STEP 2 #
+# Read the subject file
+subject_train_data <- read.table("C:\\Users\\nhart\\OneDrive\\Desktop\\Johns Hopkins\\Getting_Cleaning_Data\\End of course project\\subject_train.txt", header = FALSE, col.names = c("subject"))
+# Read the activity code file
+y_train_data <- read.table("C:\\Users\\nhart\\OneDrive\\Desktop\\Johns Hopkins\\Getting_Cleaning_Data\\End of course project\\y_train.txt", header = FALSE, col.names = c("activity.code"))
+# Check that the number of rows in both data frames is the same
+if (nrow(subject_data) != nrow(activity_data)) {
+  stop("The files have different numbers of rows")
+}
+# Merge the subject and activity data frames by columns
+subact_train_data <- cbind(subject_train_data, y_train_data)
+# Read the activity label file
+activity_labels <- read.table("C:\\Users\\nhart\\OneDrive\\Desktop\\Johns Hopkins\\Getting_Cleaning_Data\\End of course project\\activity_labels.txt", header = FALSE, col.names = c("activity.code", "activity.label"))
+# Merge subact_test data frame with activity label data frame
+subact_train_merged_data <- merge(subact_train_data, activity_labels, by = "activity.code", all.x = TRUE)
+# Reorder columns
+subact_train_merged_data <- subact_train_merged_data[c("subject", "activity.code", "activity.label")]
+# Display the first few rows of the merged data
+head(subact_train_merged_data)
+# Write the subact_train_merged_data to a CSV file
+write.csv(subact_train_merged_data, file = "C:\\Users\\nhart\\OneDrive\\Desktop\\Johns Hopkins\\Getting_Cleaning_Data\\End of course project\\ subact_train_merged_data.csv", row.names = FALSE)
+
+# STEP 3 #
+# Read the X_test file (2947 observations of 561 variables)
+X_test <- read.table("C:\\Users\\nhart\\OneDrive\\Desktop\\Johns Hopkins\\Getting_Cleaning_Data\\End of course project\\UCI HAR Dataset\\test\\X_test.txt")
+# Read the features file (561 observations of 2 variables)
+features <- read.table("C:\\Users\\nhart\\OneDrive\\Desktop\\Johns Hopkins\\Getting_Cleaning_Data\\End of course project\\UCI HAR Dataset\\features.txt")
+# Assuming `features` is your dataframe with the variable names, and `X_test` is the dataframe without headers. First, extract the second column of the `features` dataframe which contains the variable names
+variable_names <- features[,2]
+# Make sure that the length of variable_names matches the number of columns in X_test
+if(length(variable_names) == ncol(X_test)) {
+  # Assign the variable names to the column names of X_test
+  colnames(X_test) <- variable_names
+  # Create a new dataframe `X_test_with_headers` by copying `X_test` now that it has headers
+  X_test_with_headers <- X_test
+} else {
+  stop("The number of features does not match the number of variables in X_test")
+}
+# Display the first few rows of the new data frame
+head(X_test_with_headers)
+# Write the merged dataframe to a CSV file
+write.csv(X_test_with_headers, file = "C:\\Users\\nhart\\OneDrive\\Desktop\\Johns Hopkins\\Getting_Cleaning_Data\\End of course project\\X_test_with_headers.csv", row.names = FALSE)
+# To save the 'X_test_with_headers' dataframe as a text file
+write.table(X_test_with_headers, file = "X_test_with_headers.txt", sep = "\t", row.names = FALSE, col.names = TRUE)
+
+#Step 4 #
+# Read the X_train file (7352 observations of 561 variables)
+X_train <- read.table("C:\\Users\\nhart\\OneDrive\\Desktop\\Johns Hopkins\\Getting_Cleaning_Data\\End of course project\\UCI HAR Dataset\\train\\X_train.txt")
+# Read the features file (561 observations of 2 variables)
+features <- read.table("C:\\Users\\nhart\\OneDrive\\Desktop\\Johns Hopkins\\Getting_Cleaning_Data\\End of course project\\UCI HAR Dataset\\features.txt")
+# Assuming `features` is your dataframe with the variable names, and `X_test` is the dataframe without headers. First, extract the second column of the `features` dataframe which contains the variable names
+variable_names <- features[,2]
+# Make sure that the length of variable_names matches the number of columns in X_test
+if(length(variable_names) == ncol(X_train)) {
+  # Assign the variable names to the column names of X_test
+  colnames(X_train) <- variable_names
+  # Create a new dataframe `X_test_with_headers` by copying `X_test` now that it has headers
+  X_train_with_headers <- X_train
+} else {
+  stop("The number of features does not match the number of variables in X_train")
+}
+# Display the first few rows of the new data frame
+head(X_train_with_headers)
+# Write the merged dataframe to a CSV file
+write.csv(X_train_with_headers, file = "C:\\Users\\nhart\\OneDrive\\Desktop\\Johns Hopkins\\Getting_Cleaning_Data\\End of course project\\X_train_with_headers.csv", row.names = FALSE)
+# To save the 'X_train_with_headers' dataframe as a text file
+write.table(X_train_with_headers, file = "X_train_with_headers.txt", sep = "\t", row.names = FALSE, col.names = TRUE)
+
+# Step #5 #
+# Aggregate subject/action files with variable files
+test_df_full <- cbind(subact_test_merged_data, X_test_with_headers)
+train_df_full <- cbind(subact_train_merged_data, X_train_with_headers)
+# Aggregate test and train data sets
+# Assuming both data frames have an extra header row
+# Remove extra header row from train_df_full
+train_df_full <- train_df_full[-1, ] 
+# Ensure column names match
+colnames(train_df_full) <- colnames(test_df_full) 
+# Combine the data frames
+Full_dataset <- rbind(test_df_full, train_df_full)  
+
+# Step #6 #
+# create analysis subset
+# Identify columns that contain "mean()" or "std()"
+mean_std_columns <- grep("mean\\(\\)|std\\(\\)", names(full_dataset), value = TRUE)
+# Combine the specific columns with the "mean()" and "std()" columns
+required_columns <- c("subject", "activity.label", mean_std_columns)
+# Subset the full_dataset to include only the required columns
+subset_dataset <- full_dataset[, required_columns]
+
+# Step #7 #
+# create tidy dataset
+library(dplyr)
+average_dataset <- subset_dataset %>%
+  mutate(subject = as.character(subject)) %>% # Convert 'subject' to character
+  arrange(subject, `activity.label`) %>% # Sort by 'subject' and 'activity.label'
+  group_by(subject, `activity.label`) %>% # Group by 'subject' and 'activity.label'
+  summarise(across(everything(), ~mean(.x, na.rm = TRUE)), .groups = 'drop') # Calculate means
+write.csv(average_dataset, file = "C:\\Users\\nhart\\OneDrive\\Desktop\\Johns Hopkins\\Getting_Cleaning_Data\\End of course project\\average_dataset.csv", row.names = FALSE)
+write.table(average_dataset, file = "average_dataset.txt", sep = "\t", row.names = FALSE, col.names = TRUE)
